@@ -3,30 +3,32 @@ package com.davidaisuke.biblioteca.controller;
 import com.davidaisuke.biblioteca.model.Livro;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/livros")
 public class LivroController {
+    private final List<Livro> livros = new ArrayList<>();
 
     @GetMapping
-    public String inicio() {
+    public String inicio(Model model) {
+        model.addAttribute("livros", livros);
         return "livros/inicio";
     }
 
-    @GetMapping("/livro")
-    public String exibirLivro(Model model){
-        Livro livro = new Livro();
-        livro.setTitulo("Dom Casmurro");
-        livro.setAutor("Machado de Assis");
-        livro.setIsbn("987-85-00-00000-0");
+    @PostMapping
+    public String cadastrar(@ModelAttribute Livro item) {
+        livros.add(item);
+        return "redirect:/livros";
+    }
 
-        model.addAttribute(
-            "livro",livro);
-            return "livro";
+    @PostMapping("/excluir/{indice}")
+    public String excluir(@PathVariable int indice) {
+        if (indice >= 0 && indice < livros.size()) {
+            livros.remove(indice);
+        }
+        return "redirect:/livros";
     }
 }
-
-
-

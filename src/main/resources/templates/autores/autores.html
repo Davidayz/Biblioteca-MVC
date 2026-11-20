@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autores</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1>Autores</h1>
+<h2>Menu</h2>
+<nav>
+    <a th:href="@{/livros}">Livros</a>
+    <a th:href="@{/autores}">Autores</a>
+    <a th:href="@{/categorias}">Categorias</a>
+    <a th:href="@{/usuarios}">Usuários</a>
+    <a th:href="@{/emprestimos}">Empréstimos</a>
+</nav>
+<hr>
+<h2>Cadastrar Autor</h2>
+<form th:action="@{/autores}" method="post">
+    <div class="campos">
+        <div>
+            <label for="nome">Nome:</label>
+            <input id="nome" type="text" name="nome" required>
+        </div>
+        <div>
+            <label for="nacionalidade">Nacionalidade:</label>
+            <input id="nacionalidade" type="text" name="nacionalidade" required>
+        </div>
+        <div>
+            <label for="obraspublicadas">Obras publicadas:</label>
+            <input id="obraspublicadas" type="text" name="obraspublicadas" required>
+        </div>
+    </div>
+    <button type="submit">Cadastrar</button>
+</form>
+<h2>Autores Cadastrados</h2>
+<table>
+    <thead><tr>
+            <th>Nome</th>
+            <th>Nacionalidade</th>
+            <th>Obras publicadas</th>
+        <th>Ação</th>
+    </tr></thead>
+    <tbody>
+        <tr th:each="item, i : ${autores}">
+            <td th:text="${item.nome}"></td>
+            <td th:text="${item.nacionalidade}"></td>
+            <td th:text="${item.obraspublicadas}"></td>
+            <td>
+                <form th:action="@{/autores/excluir/{indice}(indice=${i.index})}" method="post">
+                    <button type="submit">Excluir</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

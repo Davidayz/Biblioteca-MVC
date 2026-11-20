@@ -1,22 +1,60 @@
-
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Biblioteca</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
-
 <body>
 <h1>Sistema de Biblioteca</h1>
-<p>Bem-vindo ao Sistema</p>
 <h2>Menu</h2>
-
-<a th:href="@{/livros}">Livros</a>
-<a th:href="@{/livros}">Autores</a>
-<a th:href="@{/livros}">Categorias</a>
-<a th:href="@{/livros}">Usuários</a>
-<a th:href="@{/livros}">Empréstimos</a>
-
+<nav>
+    <a th:href="@{/livros}">Livros</a>
+    <a th:href="@{/autores}">Autores</a>
+    <a th:href="@{/categorias}">Categorias</a>
+    <a th:href="@{/usuarios}">Usuários</a>
+    <a th:href="@{/emprestimos}">Empréstimos</a>
+</nav>
+<hr>
+<h2>Cadastrar Livro</h2>
+<form th:action="@{/livros}" method="post">
+    <div class="campos">
+        <div>
+            <label for="titulo">Título:</label>
+            <input id="titulo" type="text" name="titulo" required>
+        </div>
+        <div>
+            <label for="autor">Autor:</label>
+            <input id="autor" type="text" name="autor" required>
+        </div>
+        <div>
+            <label for="isbn">ISBN:</label>
+            <input id="isbn" type="text" name="isbn" required>
+        </div>
+    </div>
+    <button type="submit">Cadastrar</button>
+</form>
+<h2>Livros Cadastrados</h2>
+<table>
+    <thead><tr>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>ISBN</th>
+        <th>Ação</th>
+    </tr></thead>
+    <tbody>
+        <tr th:each="item, i : ${livros}">
+            <td th:text="${item.titulo}"></td>
+            <td th:text="${item.autor}"></td>
+            <td th:text="${item.isbn}"></td>
+            <td>
+                <form th:action="@{/livros/excluir/{indice}(indice=${i.index})}" method="post">
+                    <button type="submit">Excluir</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
 </body>
 </html>

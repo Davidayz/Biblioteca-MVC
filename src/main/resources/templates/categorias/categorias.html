@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorias</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1>Categorias</h1>
+<h2>Menu</h2>
+<nav>
+    <a th:href="@{/livros}">Livros</a>
+    <a th:href="@{/autores}">Autores</a>
+    <a th:href="@{/categorias}">Categorias</a>
+    <a th:href="@{/usuarios}">Usuários</a>
+    <a th:href="@{/emprestimos}">Empréstimos</a>
+</nav>
+<hr>
+<h2>Cadastrar Categoria</h2>
+<form th:action="@{/categorias}" method="post">
+    <div class="campos">
+        <div>
+            <label for="classificação">Classificação:</label>
+            <input id="classificação" type="text" name="classificação" required>
+        </div>
+        <div>
+            <label for="genero">Gênero:</label>
+            <input id="genero" type="text" name="genero" required>
+        </div>
+    </div>
+    <button type="submit">Cadastrar</button>
+</form>
+<h2>Categorias Cadastrados</h2>
+<table>
+    <thead><tr>
+            <th>Classificação</th>
+            <th>Gênero</th>
+        <th>Ação</th>
+    </tr></thead>
+    <tbody>
+        <tr th:each="item, i : ${categorias}">
+            <td th:text="${item.classificação}"></td>
+            <td th:text="${item.genero}"></td>
+            <td>
+                <form th:action="@{/categorias/excluir/{indice}(indice=${i.index})}" method="post">
+                    <button type="submit">Excluir</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

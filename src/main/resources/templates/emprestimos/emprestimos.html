@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empréstimos</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1>Empréstimos</h1>
+<h2>Menu</h2>
+<nav>
+    <a th:href="@{/livros}">Livros</a>
+    <a th:href="@{/autores}">Autores</a>
+    <a th:href="@{/categorias}">Categorias</a>
+    <a th:href="@{/usuarios}">Usuários</a>
+    <a th:href="@{/emprestimos}">Empréstimos</a>
+</nav>
+<hr>
+<h2>Cadastrar Emprestimos</h2>
+<form th:action="@{/emprestimos}" method="post">
+    <div class="campos">
+        <div>
+            <label for="livro">Livro:</label>
+            <input id="livro" type="text" name="livro" required>
+        </div>
+        <div>
+            <label for="usuario">Usuário:</label>
+            <input id="usuario" type="text" name="usuario" required>
+        </div>
+        <div>
+            <label for="dataEmprestimo">Data do empréstimo:</label>
+            <input id="dataEmprestimo" type="date" name="dataEmprestimo" required>
+        </div>
+        <div>
+            <label for="dataDevolucao">Data da devolução:</label>
+            <input id="dataDevolucao" type="date" name="dataDevolucao" >
+        </div>
+    </div>
+    <button type="submit">Cadastrar</button>
+</form>
+<h2>Empréstimos Cadastrados</h2>
+<table>
+    <thead><tr>
+            <th>Livro</th>
+            <th>Usuário</th>
+            <th>Data do empréstimo</th>
+            <th>Data da devolução</th>
+        <th>Ação</th>
+    </tr></thead>
+    <tbody>
+        <tr th:each="item, i : ${emprestimos}">
+            <td th:text="${item.livro}"></td>
+            <td th:text="${item.usuario}"></td>
+            <td th:text="${item.dataEmprestimo}"></td>
+            <td th:text="${item.dataDevolucao}"></td>
+            <td>
+                <form th:action="@{/emprestimos/excluir/{indice}(indice=${i.index})}" method="post">
+                    <button type="submit">Excluir</button>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>
